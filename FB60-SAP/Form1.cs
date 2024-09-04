@@ -4,218 +4,13 @@ using ClosedXML.Excel;
 
 namespace FB60_SAP
 {
-    public partial class Form1 : Form
+    public static class DiccionarioCuentasMayor
     {
-        public Form1()
+        public static Dictionary<string, long> diccionarioCuentasMayor { get; private set; }
+
+        static DiccionarioCuentasMayor()
         {
-            InitializeComponent();
-
-            // Establecer el estilo del borde y deshabilitar el cambio de tamaño
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
-
-            // Establecer el tamaño mínimo y máximo para evitar el cambio de tamaño
-            this.MinimumSize = this.MaximumSize = this.Size;
-        }
-
-        private void SeleccionarArchivo(TextBox textBox)
-        {
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
-            {
-                openFileDialog.Filter = "Archivos Excel|*.xlsx;*.csv";
-                openFileDialog.Title = "Seleccionar el archivo Excel o CSV";
-
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    textBox.Text = openFileDialog.FileName;
-                }
-            }
-        }
-
-        private void buttonSeleccionarExcel_Click(object sender, EventArgs e)
-        {
-            SeleccionarArchivo(textBoxRutaExcel);
-        }
-
-        private void buttonEjecutarScript_Click(object sender, EventArgs e)
-        {
-            // Obtener la ruta del directorio donde está el ejecutable
-            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-
-            // Construir la ruta relativa al script dentro del repositorio
-            string scriptRelativePath = Path.Combine(baseDirectory, @"Script\Script.vbs");
-
-            // Ejecutar el script
-            ProcessStartInfo startInfo = new ProcessStartInfo
-            {
-                FileName = scriptRelativePath,
-                UseShellExecute = true // Esto es importante para permitir la ejecución del script
-            };
-
-            try
-            {
-                Process.Start(startInfo);
-                MessageBox.Show("Script ejecutado con éxito.");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al ejecutar el script: " + ex.Message);
-            }
-        }
-
-        private void buttonTransformarExcel_Click(object sender, EventArgs e)
-        {
-            using (var workbook = new XLWorkbook(textBoxRutaExcel.Text))
-            {
-                var worksheet = workbook.Worksheet(1);
-
-                // Indice de las columnas del Excel
-                int indiceColumnaFecha = ObtenerIndiceColumna(worksheet, "Fecha");
-                int indiceColumnaTipo = ObtenerIndiceColumna(worksheet, "Tipo");
-                int indiceColumnaPuntoVenta = ObtenerIndiceColumna(worksheet, "Punto de Venta");
-                int indiceColumnaComprobante = ObtenerIndiceColumna(worksheet, "Número Desde");
-                int indiceColumnaComprobanteVentaHasta = ObtenerIndiceColumna(worksheet, "Número Hasta");
-                int indiceColumnaCodigoAutorizacion = ObtenerIndiceColumna(worksheet, "Cód. Autorización");
-                int indiceColumnaTipoDocEmisor = ObtenerIndiceColumna(worksheet, "Tipo Doc. Emisor");
-                int indiceColumnaNroDocEmisor = ObtenerIndiceColumna(worksheet, "Nro. Doc. Emisor");
-                int indiceColumnaDenominacionEmisor = ObtenerIndiceColumna(worksheet, "Denominación Emisor");
-                int indiceColumnaTipoCambio = ObtenerIndiceColumna(worksheet, "Tipo Cambio");
-                int indiceColumnaMoneda = ObtenerIndiceColumna(worksheet, "Moneda");
-                int indiceColumnaNetoGravado = ObtenerIndiceColumna(worksheet, "Imp. Neto Gravado");
-                int indiceColumnaNetoNoGravado = ObtenerIndiceColumna(worksheet, "Imp. Neto No Gravado");
-                int indiceColumnaOperacionesExentas = ObtenerIndiceColumna(worksheet, "Imp. Op. Exentas");
-                int indiceColumnaOtrosTributos = ObtenerIndiceColumna(worksheet, "Otros Tributos");
-                int indiceColumnaIVA = ObtenerIndiceColumna(worksheet, "IVA");
-                int indiceColumnaImporteTotal = ObtenerIndiceColumna(worksheet, "Imp. Total");
-                int indiceColumnaTexto = ObtenerIndiceColumna(worksheet, "texto");
-                int indiceColumnaIndicador = ObtenerIndiceColumna(worksheet, "indicador");
-
-                int ultimaFila = worksheet.LastRowUsed().RowNumber();
-
-                // Valores necesarios para utilizar
-                for (int fila = 2; fila <= ultimaFila; fila++) // Empezamos desde la fila 2, asumiendo que la fila 1 es encabezados
-                {
-                    // Obtener valor de la columna Fecha y cambiar a puntos
-                    string stringFecha = worksheet.Cell(fila, indiceColumnaFecha).GetString();
-                    DateTime fecha = DateTime.Parse(stringFecha);
-                    stringFecha = fecha.Date.ToString();
-                    stringFecha = stringFecha.Replace('/', '.');
-                    stringFecha = stringFecha.Split(' ')[0];
-
-                    // Obtener tipo comprobante
-                    char tipoMapeado = ExtraerTipoFactura(worksheet.Cell(fila, indiceColumnaTipo).GetString());
-                    if (tipoMapeado == 'O')
-                    {
-                        MessageBox.Show("Error al mapear el tipo");
-                    }
-
-                    // Obtener valor del comprobante
-                    string puntoVenta = worksheet.Cell(fila, indiceColumnaPuntoVenta).Value.ToString().PadLeft(5, '0');
-                    string numeroComprobante = worksheet.Cell(fila, indiceColumnaComprobante).Value.ToString().PadLeft(8, '0');
-
-                    // Valor de referencia COMPLETO
-                    string referencia = $"{puntoVenta}{tipoMapeado}{numeroComprobante}";
-
-                    // Obtener valor de la columna Neto Gravado
-                    string valorCeldaNetoGravado = worksheet.Cell(fila, indiceColumnaNetoGravado).GetString();
-                    string valorCeldaNetoGravadoSinComa = valorCeldaNetoGravado.Replace(",", ".");
-                    double netoGravado = double.Parse(valorCeldaNetoGravadoSinComa, CultureInfo.InvariantCulture);
-
-                    // Obtener valor de la columna Neto No Gravado
-                    string valorCeldaNetoNoGravado = worksheet.Cell(fila, indiceColumnaNetoNoGravado).GetString();
-                    string valorCeldaNetoNoGravadoSinComa = valorCeldaNetoNoGravado.Replace(",", ".");
-                    if (valorCeldaNetoNoGravadoSinComa != "")
-                    {
-                        double netoNoGravado = double.Parse(valorCeldaNetoNoGravadoSinComa, CultureInfo.InvariantCulture);
-                    }             
-
-                    // Obtener valor de la columna IVA
-                    string valorCeldaIVA = worksheet.Cell(fila, indiceColumnaIVA).GetString();
-                    string valorCeldaIVASinComa = valorCeldaIVA.Replace(",", ".");
-                    double IVA = double.Parse(valorCeldaIVASinComa, CultureInfo.InvariantCulture);
-
-                    // Obtener valor de la columna Total
-                    string valorCeldaTotal = worksheet.Cell(fila, indiceColumnaImporteTotal).GetString();
-                    string valorCeldaTotalSinComa = valorCeldaTotal.Replace(",", ".");
-                    double total = double.Parse(valorCeldaTotalSinComa, CultureInfo.InvariantCulture);
-
-                    // Obtener valor de la columna Texto
-                    string valorCeldaTexto = worksheet.Cell(fila, indiceColumnaTexto).GetString();
-
-                    // Obtener valor de la columna Indicador
-                    string valorCeldaIndicador = worksheet.Cell(fila, indiceColumnaIndicador).GetString();
-
-                    // Obtener valor de la cuenta mayor
-                    string valorCuentaMayor = ExtraerCuentaMayor(valorCeldaTexto.Split('-')[1]).ToString();
-                    if (valorCuentaMayor == "-1")
-                    {
-                        MessageBox.Show("Error al mapear la cuenta mayor");
-                    }
-
-                    // Obtener valor codigo acreedor
-                    string valorNombreAcreedor = worksheet.Cell(fila, indiceColumnaDenominacionEmisor).GetString();
-                    long codigoAcreedor = ExtraerCodigoAcreedor(valorNombreAcreedor);
-                    if (codigoAcreedor == -1)
-                    {
-                        MessageBox.Show("Error al mapear el codigo de acreedor");
-                    }
-
-                    // Obtener valor de centro costos
-                    string valorCentroCosto = ExtraerCentroCosto(valorCeldaTexto.Split('-')[0]).ToString();
-                    if (valorCentroCosto == "-1")
-                    {
-                        MessageBox.Show("Error al mapear el centro costo");
-                    }
-
-                    // Obtener valor de la columna Fecha Contabilidad
-                    string stringFechaContabilidad = worksheet.Cell(fila, indiceColumnaFecha).GetString();
-                    DateTime fechaContabilidad = DateTime.Parse(stringFechaContabilidad);
-                    string fechaContabilidadConvertida = "";
-                    if (fechaContabilidad.Month < DateTime.Now.Month)
-                    {
-                        string añoFechaContabilidad = DateTime.Now.Date.Year.ToString();
-                        string mesFechaContabilidad = DateTime.Now.Date.Month.ToString().PadLeft(2, '0');
-                        fechaContabilidadConvertida = $"01.{mesFechaContabilidad}.{añoFechaContabilidad}";
-                    }
-                    else
-                    {
-                        fechaContabilidadConvertida = stringFechaContabilidad.Replace('/', '.');
-                    }
-
-                    // Neto + IVA
-                    string netoConIva = (IVA + netoGravado).ToString();
-
-                    // Tipo de venta
-                    string tipoVenta = valorCeldaTexto.Split('-')[0].ToString();
-
-                    // Categoria de venta
-                    string categoriaVenta = valorCeldaTexto.Split('-')[1].ToString();
-
-                    MessageBox.Show($"Fecha convertida:{stringFecha}, Cuenta mayor:{valorCuentaMayor}, Referencia:{referencia}, Centro costo:{valorCentroCosto}, Codigo acreedor: {codigoAcreedor}, Fecha contabilidad:{fechaContabilidadConvertida}, Neto con IVA:{netoConIva.Replace(',', '.')}, Tipo Venta:{tipoVenta}, Categoria Venta: {categoriaVenta}");
-                }
-            }
-        }
-
-        // Función para obtener el índice de una columna específica
-        static int ObtenerIndiceColumna(IXLWorksheet worksheet, string nombreColumna)
-        {
-            int indiceColumna = -1;
-
-            for (int col = 1; col <= worksheet.LastColumnUsed().ColumnNumber(); col++)
-            {
-                string valor = worksheet.Cell(1, col).GetString();
-
-                if (valor.Equals(nombreColumna, StringComparison.OrdinalIgnoreCase))
-                {
-                    indiceColumna = col;
-                    break;
-                }
-            }
-
-            return indiceColumna;
-        }
-        static long ExtraerCuentaMayor(string nombre)
-        {
-            var diccionarioCuentasMayor = new Dictionary<string, long>
+            diccionarioCuentasMayor = new Dictionary<string, long>
             {
                 {"GASTOS COMBUSTIBLES", 8001070200},
                 {"GASTOS GENERALES", 8001020100},
@@ -233,53 +28,17 @@ namespace FB60_SAP
                 {"GASTOS HONORARIOS AUDITORIA", 8001110000},
                 {"GASTOS DIF DE CAMBIO NEGATIVA REALIZADA", 6603020300},
             };
-
-            return ObtenerValorDeDiccionarioCuentaMayor(diccionarioCuentasMayor, nombre);
         }
 
-        static long ExtraerCentroCosto(string tipo)
+    }
+
+    public static class DiccionarioCodigosAcreedores
+    {
+        public static Dictionary<string, long> diccionarioCodigosAcreedores { get; private set; }
+
+        static DiccionarioCodigosAcreedores()
         {
-            var diccionarioCuentasCentroCosto = new Dictionary<string, long>
-            {
-                {"VTAS", 5130010401},
-                {"ADM", 5130010802},
-            };
-
-            return ObtenerValorDeDiccionario(diccionarioCuentasCentroCosto, tipo);
-        }
-
-        static char ExtraerTipoFactura(string tipo)
-        {
-            var diccionarioTiposFacturas = new Dictionary<string, char>
-            {
-                {"Factura A", 'A'},
-                {"FAC A", 'A'},
-                {"FA A", 'A'},
-                {"Factura B", 'B'},
-                {"FAC B", 'B'},
-                {"FA B", 'B'},
-                {"Factura C", 'C'},
-                {"FAC C", 'C'},
-                {"FA C", 'C'},
-                {"Nota de Crédito A", 'A'},
-                {"NC A", 'A'},
-                {"Nota de Débito A", 'A'},
-                {"ND A", 'A'},
-                {"Recibo A", 'A'},
-                {"Recibo B", 'B'},
-                {"Recibo C", 'C'}
-            };
-
-
-            // Normalizar cadenas y extraer tipo y letra para comparación con diccionarioAFIP
-            string normalizado = NormalizarAFIP(tipo);
-
-            return ObtenerValorDeDiccionario(diccionarioTiposFacturas, normalizado);
-        }
-
-        static long ExtraerCodigoAcreedor(string nombre)
-        {
-            var diccionarioCodigosAcreedores = new Dictionary<string, long>
+            diccionarioCodigosAcreedores = new Dictionary<string, long>
             {
                 {"AFIP",  3000030},
                 {"ARRESE LUCAS", 2001713},
@@ -601,9 +360,285 @@ namespace FB60_SAP
                 {"ASTILLERO S.R.L ", 1016916},
                 {"SEVEN S.A.S", 1016930},
             };
+        }
+    }
 
+    public static class DiccionarioCuentasCentroCosto
+    {
+        public static Dictionary<string, long> diccionarioCuentasCentroCosto { get; private set; }
+
+        static DiccionarioCuentasCentroCosto()
+        {
+            diccionarioCuentasCentroCosto = new Dictionary<string, long>
+            {
+                {"VTAS", 5130010401},
+                {"ADM", 5130010802},
+            };
+        }
+
+    }
+
+    public static class DiccionarioTiposFacturas
+    {
+        public static Dictionary<string, char> diccionarioTiposFacturas { get; private set; }
+
+        static DiccionarioTiposFacturas()
+        {
+            diccionarioTiposFacturas = new Dictionary<string, char>
+            {
+                {"Factura A", 'A'},
+                {"FAC A", 'A'},
+                {"FA A", 'A'},
+                {"Factura B", 'B'},
+                {"FAC B", 'B'},
+                {"FA B", 'B'},
+                {"Factura C", 'C'},
+                {"FAC C", 'C'},
+                {"FA C", 'C'},
+                {"Nota de Crédito A", 'A'},
+                {"NC A", 'A'},
+                {"Nota de Débito A", 'A'},
+                {"ND A", 'A'},
+                {"Recibo A", 'A'},
+                {"Recibo B", 'B'},
+                {"Recibo C", 'C'}
+            };
+        }
+
+    }
+ 
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+
+            // Establecer el estilo del borde y deshabilitar el cambio de tamaño
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+
+            // Establecer el tamaño mínimo y máximo para evitar el cambio de tamaño
+            this.MinimumSize = this.MaximumSize = this.Size;
+        }
+
+        private void SeleccionarArchivo(TextBox textBox)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Filter = "Archivos Excel|*.xlsx;*.csv";
+                openFileDialog.Title = "Seleccionar el archivo Excel o CSV";
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    textBox.Text = openFileDialog.FileName;
+                }
+            }
+        }
+
+        private void buttonSeleccionarExcel_Click(object sender, EventArgs e)
+        {
+            SeleccionarArchivo(textBoxRutaExcel);
+        }
+
+        private void buttonEjecutarScript_Click(object sender, EventArgs e)
+        {
+            // Obtener la ruta del directorio donde está el ejecutable
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
+            // Construir la ruta relativa al script dentro del repositorio
+            string scriptRelativePath = Path.Combine(baseDirectory, @"Script\Script.vbs");
+
+            // Ejecutar el script
+            ProcessStartInfo startInfo = new ProcessStartInfo
+            {
+                FileName = scriptRelativePath,
+                UseShellExecute = true // Esto es importante para permitir la ejecución del script
+            };
+
+            try
+            {
+                Process.Start(startInfo);
+                MessageBox.Show("Script ejecutado con éxito.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al ejecutar el script: " + ex.Message);
+            }
+        }
+
+        private void buttonTransformarExcel_Click(object sender, EventArgs e)
+        {
+            using (var workbook = new XLWorkbook(textBoxRutaExcel.Text))
+            {
+                var worksheet = workbook.Worksheet(1);
+
+                // Indice de las columnas del Excel
+                int indiceColumnaFecha = ObtenerIndiceColumna(worksheet, "Fecha");
+                int indiceColumnaTipo = ObtenerIndiceColumna(worksheet, "Tipo");
+                int indiceColumnaPuntoVenta = ObtenerIndiceColumna(worksheet, "Punto de Venta");
+                int indiceColumnaComprobante = ObtenerIndiceColumna(worksheet, "Número Desde");
+                int indiceColumnaComprobanteVentaHasta = ObtenerIndiceColumna(worksheet, "Número Hasta");
+                int indiceColumnaCodigoAutorizacion = ObtenerIndiceColumna(worksheet, "Cód. Autorización");
+                int indiceColumnaTipoDocEmisor = ObtenerIndiceColumna(worksheet, "Tipo Doc. Emisor");
+                int indiceColumnaNroDocEmisor = ObtenerIndiceColumna(worksheet, "Nro. Doc. Emisor");
+                int indiceColumnaDenominacionEmisor = ObtenerIndiceColumna(worksheet, "Denominación Emisor");
+                int indiceColumnaTipoCambio = ObtenerIndiceColumna(worksheet, "Tipo Cambio");
+                int indiceColumnaMoneda = ObtenerIndiceColumna(worksheet, "Moneda");
+                int indiceColumnaNetoGravado = ObtenerIndiceColumna(worksheet, "Imp. Neto Gravado");
+                int indiceColumnaNetoNoGravado = ObtenerIndiceColumna(worksheet, "Imp. Neto No Gravado");
+                int indiceColumnaOperacionesExentas = ObtenerIndiceColumna(worksheet, "Imp. Op. Exentas");
+                int indiceColumnaOtrosTributos = ObtenerIndiceColumna(worksheet, "Otros Tributos");
+                int indiceColumnaIVA = ObtenerIndiceColumna(worksheet, "IVA");
+                int indiceColumnaImporteTotal = ObtenerIndiceColumna(worksheet, "Imp. Total");
+                int indiceColumnaTexto = ObtenerIndiceColumna(worksheet, "texto");
+                int indiceColumnaIndicador = ObtenerIndiceColumna(worksheet, "indicador");
+
+                int ultimaFila = worksheet.LastRowUsed().RowNumber();
+
+                // Valores necesarios para utilizar
+                for (int fila = 2; fila <= ultimaFila; fila++) // Empezamos desde la fila 2, asumiendo que la fila 1 es encabezados
+                {
+                    // Obtener valor de la columna Fecha y cambiar a puntos
+                    string stringFecha = worksheet.Cell(fila, indiceColumnaFecha).GetString();
+                    DateTime fecha = DateTime.Parse(stringFecha);
+                    stringFecha = fecha.Date.ToString();
+                    stringFecha = stringFecha.Replace('/', '.');
+                    stringFecha = stringFecha.Split(' ')[0];
+
+                    // Obtener tipo comprobante
+                    char tipoMapeado = ExtraerTipoFactura(worksheet.Cell(fila, indiceColumnaTipo).GetString());
+                    if (tipoMapeado == 'O')
+                    {
+                        MessageBox.Show("Error al mapear el tipo");
+                    }
+
+                    // Obtener valor del comprobante
+                    string puntoVenta = worksheet.Cell(fila, indiceColumnaPuntoVenta).Value.ToString().PadLeft(5, '0');
+                    string numeroComprobante = worksheet.Cell(fila, indiceColumnaComprobante).Value.ToString().PadLeft(8, '0');
+
+                    // Valor de referencia COMPLETO
+                    string referencia = $"{puntoVenta}{tipoMapeado}{numeroComprobante}";
+
+                    // Obtener valor de la columna Neto Gravado
+                    string valorCeldaNetoGravado = worksheet.Cell(fila, indiceColumnaNetoGravado).GetString();
+                    string valorCeldaNetoGravadoSinComa = valorCeldaNetoGravado.Replace(",", ".");
+                    double netoGravado = double.Parse(valorCeldaNetoGravadoSinComa, CultureInfo.InvariantCulture);
+
+                    // Obtener valor de la columna Neto No Gravado
+                    string valorCeldaNetoNoGravado = worksheet.Cell(fila, indiceColumnaNetoNoGravado).GetString();
+                    string valorCeldaNetoNoGravadoSinComa = valorCeldaNetoNoGravado.Replace(",", ".");
+                    if (valorCeldaNetoNoGravadoSinComa != "")
+                    {
+                        double netoNoGravado = double.Parse(valorCeldaNetoNoGravadoSinComa, CultureInfo.InvariantCulture);
+                    }             
+
+                    // Obtener valor de la columna IVA
+                    string valorCeldaIVA = worksheet.Cell(fila, indiceColumnaIVA).GetString();
+                    string valorCeldaIVASinComa = valorCeldaIVA.Replace(",", ".");
+                    double IVA = double.Parse(valorCeldaIVASinComa, CultureInfo.InvariantCulture);
+
+                    // Obtener valor de la columna Total
+                    string valorCeldaTotal = worksheet.Cell(fila, indiceColumnaImporteTotal).GetString();
+                    string valorCeldaTotalSinComa = valorCeldaTotal.Replace(",", ".");
+                    double total = double.Parse(valorCeldaTotalSinComa, CultureInfo.InvariantCulture);
+
+                    // Obtener valor de la columna Texto
+                    string valorCeldaTexto = worksheet.Cell(fila, indiceColumnaTexto).GetString();
+
+                    // Obtener valor de la columna Indicador
+                    string valorCeldaIndicador = worksheet.Cell(fila, indiceColumnaIndicador).GetString();
+
+                    // Obtener valor de la cuenta mayor
+                    string valorCuentaMayor = ExtraerCuentaMayor(valorCeldaTexto.Split('-')[1]).ToString();
+                    if (valorCuentaMayor == "-1")
+                    {
+                        MessageBox.Show("Error al mapear la cuenta mayor");
+                    }
+
+                    // Obtener valor codigo acreedor
+                    string valorNombreAcreedor = worksheet.Cell(fila, indiceColumnaDenominacionEmisor).GetString();
+                    long codigoAcreedor = ExtraerCodigoAcreedor(valorNombreAcreedor);
+                    if (codigoAcreedor == -1)
+                    {
+                        MessageBox.Show("Error al mapear el codigo de acreedor");
+                    }
+
+                    // Obtener valor de centro costos
+                    string valorCentroCosto = ExtraerCentroCosto(valorCeldaTexto.Split('-')[0]).ToString();
+                    if (valorCentroCosto == "-1")
+                    {
+                        MessageBox.Show("Error al mapear el centro costo");
+                    }
+
+                    // Obtener valor de la columna Fecha Contabilidad
+                    string stringFechaContabilidad = worksheet.Cell(fila, indiceColumnaFecha).GetString();
+                    DateTime fechaContabilidad = DateTime.Parse(stringFechaContabilidad);
+                    string fechaContabilidadConvertida = "";
+                    if (fechaContabilidad.Month < DateTime.Now.Month)
+                    {
+                        string añoFechaContabilidad = DateTime.Now.Date.Year.ToString();
+                        string mesFechaContabilidad = DateTime.Now.Date.Month.ToString().PadLeft(2, '0');
+                        fechaContabilidadConvertida = $"01.{mesFechaContabilidad}.{añoFechaContabilidad}";
+                    }
+                    else
+                    {
+                        fechaContabilidadConvertida = stringFechaContabilidad.Replace('/', '.');
+                    }
+
+                    // Neto + IVA
+                    string netoConIva = (IVA + netoGravado).ToString();
+
+                    // Tipo de venta
+                    string tipoVenta = valorCeldaTexto.Split('-')[0].ToString();
+
+                    // Categoria de venta
+                    string categoriaVenta = valorCeldaTexto.Split('-')[1].ToString();
+
+                    MessageBox.Show($"Fecha convertida:{stringFecha}, Cuenta mayor:{valorCuentaMayor}, Referencia:{referencia}, Centro costo:{valorCentroCosto}, Codigo acreedor: {codigoAcreedor}, Fecha contabilidad:{fechaContabilidadConvertida}, Neto con IVA:{netoConIva.Replace(',', '.')}, Tipo Venta:{tipoVenta}, Categoria Venta: {categoriaVenta}");
+                }
+            }
+        }
+
+        // Función para obtener el índice de una columna específica
+        static int ObtenerIndiceColumna(IXLWorksheet worksheet, string nombreColumna)
+        {
+            int indiceColumna = -1;
+
+            for (int col = 1; col <= worksheet.LastColumnUsed().ColumnNumber(); col++)
+            {
+                string valor = worksheet.Cell(1, col).GetString();
+
+                if (valor.Equals(nombreColumna, StringComparison.OrdinalIgnoreCase))
+                {
+                    indiceColumna = col;
+                    break;
+                }
+            }
+
+            return indiceColumna;
+        }
+        static long ExtraerCuentaMayor(string nombre)
+        {
+            return ObtenerValorDeDiccionarioCuentaMayor(DiccionarioCuentasMayor.diccionarioCuentasMayor, nombre);
+        }
+
+        static long ExtraerCentroCosto(string tipo)
+        {
+            return ObtenerValorDeDiccionario(DiccionarioCuentasCentroCosto.diccionarioCuentasCentroCosto, tipo);
+        }
+
+        static char ExtraerTipoFactura(string tipo)
+        {
+           
+            // Normalizar cadenas y extraer tipo y letra para comparación con diccionarioAFIP
+            string normalizado = NormalizarAFIP(tipo);
+
+            return ObtenerValorDeDiccionario(DiccionarioTiposFacturas.diccionarioTiposFacturas, normalizado);
+        }
+
+        static long ExtraerCodigoAcreedor(string nombre)
+        {
             // Encontrar la clave más cercana en el diccionario usando Levenshtein, pero solo si está dentro del umbral
-            var resultado = diccionarioCodigosAcreedores.Keys
+            var resultado = DiccionarioCodigosAcreedores.diccionarioCodigosAcreedores.Keys
                 .Select(k => new { Key = k, Distancia = LevenshteinDistance(nombre, k) })
                 .OrderBy(x => x.Distancia)
                 .FirstOrDefault();
@@ -611,7 +646,7 @@ namespace FB60_SAP
             if (resultado != null)
             {
                 string nombreMapeado = resultado.Key;
-                long codigo = diccionarioCodigosAcreedores[nombreMapeado];
+                long codigo = DiccionarioCodigosAcreedores.diccionarioCodigosAcreedores[nombreMapeado];
                 MessageBox.Show($"El nombre mapeado para {nombre} es {nombreMapeado} con el codigo {codigo}");
                 return codigo;
             }
