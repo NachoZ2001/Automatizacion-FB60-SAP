@@ -3,7 +3,6 @@ C:\Program Files\Sublime Merge\Automatizacion-FB60-SAP\FB60-SAP\bin\Debug\net8.0
 C:\Program Files\Sublime Merge\Automatizacion-FB60-SAP\FB60-SAP\bin\Debug\net8.0-windows\FB60-SAP.runtimeconfig.json
 C:\Program Files\Sublime Merge\Automatizacion-FB60-SAP\FB60-SAP\bin\Debug\net8.0-windows\FB60-SAP.dll
 C:\Program Files\Sublime Merge\Automatizacion-FB60-SAP\FB60-SAP\bin\Debug\net8.0-windows\FB60-SAP.pdb
-C:\Program Files\Sublime Merge\Automatizacion-FB60-SAP\FB60-SAP\obj\Debug\net8.0-windows\FB60_SAP.Form1.resources
 C:\Program Files\Sublime Merge\Automatizacion-FB60-SAP\FB60-SAP\obj\Debug\net8.0-windows\FB60-SAP.csproj.GenerateResource.cache
 C:\Program Files\Sublime Merge\Automatizacion-FB60-SAP\FB60-SAP\obj\Debug\net8.0-windows\FB60-SAP.GeneratedMSBuildEditorConfig.editorconfig
 C:\Program Files\Sublime Merge\Automatizacion-FB60-SAP\FB60-SAP\obj\Debug\net8.0-windows\FB60-SAP.AssemblyInfoInputs.cache
@@ -22,3 +21,5 @@ C:\Program Files\Sublime Merge\Automatizacion-FB60-SAP\FB60-SAP\bin\Debug\net8.0
 C:\Program Files\Sublime Merge\Automatizacion-FB60-SAP\FB60-SAP\bin\Debug\net8.0-windows\XLParser.dll
 C:\Program Files\Sublime Merge\Automatizacion-FB60-SAP\FB60-SAP\obj\Debug\net8.0-windows\FB60-SAP.csproj.AssemblyReference.cache
 C:\Program Files\Sublime Merge\Automatizacion-FB60-SAP\FB60-SAP\obj\Debug\net8.0-windows\FB60-SAP.csproj.Up2Date
+C:\Program Files\Sublime Merge\Automatizacion-FB60-SAP\FB60-SAP\obj\Debug\net8.0-windows\FB60-SAP.sourcelink.json
+C:\Program Files\Sublime Merge\Automatizacion-FB60-SAP\FB60-SAP\obj\Debug\net8.0-windows\FB60_SAP.Extensions.resources

@@ -1,9 +1,18 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
+using System.Text.RegularExpressions;
 using ClosedXML.Excel;
 
 namespace FB60_SAP
 {
+    public static class Extensions
+    {
+        public static string RemoveWhiteSpaces(this string str)
+        {
+            return Regex.Replace(str, @"\s+", String.Empty);
+        }
+    }
+
     public static class DiccionarioCuentasMayor
     {
         public static Dictionary<string, long> diccionarioCuentasMayor { get; private set; }
@@ -359,6 +368,13 @@ namespace FB60_SAP
                 {"SALTA SUR S.A. ", 1016911},
                 {"ASTILLERO S.R.L ", 1016916},
                 {"SEVEN S.A.S", 1016930},
+                {"BELBUZZI VIVIANA NOEMI",  01},
+                {"EL MOLINO SA",  02},
+                {"AUTO HAUS SOCIEDAD ANONIMA",  03},
+                {"GELARDI PATRICIA NOELIA",  04},
+                {"CARPI LUCAS ROBERTO",  05},
+                {"REINHOLD YAZLLE LUIS IGNACIO",  06},
+                {"RUETE GUEMES AGUSTINA",  07}
             };
         }
     }
@@ -372,6 +388,7 @@ namespace FB60_SAP
             diccionarioCuentasCentroCosto = new Dictionary<string, long>
             {
                 {"VTAS", 5130010401},
+                {"VTA", 5130010401},
                 {"ADM", 5130010802},
             };
         }
@@ -494,6 +511,60 @@ namespace FB60_SAP
 
                 int ultimaFila = worksheet.LastRowUsed().RowNumber();
 
+                // Crear un nuevo workbook para el archivo de salida
+                var workbookSalida = new XLWorkbook();
+                var worksheetSalida = workbookSalida.Worksheets.Add("Datos Procesados");
+
+                // Definir los encabezados de la nueva hoja de cálculo
+                worksheetSalida.Cell(1, 1).Value = "Fecha";
+                worksheetSalida.Cell(1, 2).Value = "Tipo";
+                worksheetSalida.Cell(1, 3).Value = "Punto de Venta";
+                worksheetSalida.Cell(1, 4).Value = "Número Desde";
+                worksheetSalida.Cell(1, 5).Value = "Número Hasta";
+                worksheetSalida.Cell(1, 6).Value = "Cód. Autorización";
+                worksheetSalida.Cell(1, 7).Value = "Tipo Doc. Emisor";
+                worksheetSalida.Cell(1, 8).Value = "Nro. Doc. Emisor";
+                worksheetSalida.Cell(1, 9).Value = "Denominación Emisor";
+                worksheetSalida.Cell(1, 10).Value = "Tipo Cambio";
+                worksheetSalida.Cell(1, 11).Value = "Moneda";
+                worksheetSalida.Cell(1, 12).Value = "Imp. Neto Gravado";
+                worksheetSalida.Cell(1, 13).Value = "Imp. Neto No Gravado";
+                worksheetSalida.Cell(1, 14).Value = "Imp. Op. Exentas";
+                worksheetSalida.Cell(1, 15).Value = "Otros Tributos";
+                worksheetSalida.Cell(1, 16).Value = "IVA";
+                worksheetSalida.Cell(1, 17).Value = "Imp. Total";
+                worksheetSalida.Cell(1, 18).Value = "texto";
+                worksheetSalida.Cell(1, 19).Value = "indicador";
+                worksheetSalida.Cell(1, 20).Value = "fecha convertida";
+                worksheetSalida.Cell(1, 21).Value = "cuenta mayor";
+                worksheetSalida.Cell(1, 22).Value = "codigo acreedor";
+                worksheetSalida.Cell(1, 23).Value = "referencia";
+                worksheetSalida.Cell(1, 24).Value = "centro costo";
+                worksheetSalida.Cell(1, 25).Value = "fecha contabilidad";
+                worksheetSalida.Cell(1, 26).Value = "neto  + IVA";
+                worksheetSalida.Cell(1, 27).Value = "tipo venta";
+                worksheetSalida.Cell(1, 28).Value = "categoria venta";
+                worksheetSalida.Cell(1, 29).Value = "tipo factura";
+
+                int filaSalida = 2; // Fila inicial en el nuevo Excel (la 1 es para encabezados)
+
+                // Obtener el directorio base donde está el ejecutable
+                string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
+                MessageBox.Show(baseDirectory);
+
+                // Construir la ruta de la carpeta donde se guardará el archivo
+                string rutaGuardado = Path.Combine(baseDirectory, @"..\..\..\..\Script\Data");
+
+                // Asegurarse de que la ruta completa esté bien formada
+                rutaGuardado = Path.GetFullPath(rutaGuardado);
+
+                // Especificar el nombre del archivo (puedes adaptarlo según el formato deseado)
+                string nombreArchivo = "ExcelSAP.xlsx"; // Cambiar según necesites
+
+                // Combinar la ruta con el nombre del archivo
+                string rutaArchivoFinal = Path.Combine(rutaGuardado, nombreArchivo);
+
                 // Valores necesarios para utilizar
                 for (int fila = 2; fila <= ultimaFila; fila++) // Empezamos desde la fila 2, asumiendo que la fila 1 es encabezados
                 {
@@ -513,33 +584,59 @@ namespace FB60_SAP
 
                     // Obtener valor del comprobante
                     string puntoVenta = worksheet.Cell(fila, indiceColumnaPuntoVenta).Value.ToString().PadLeft(5, '0');
+                    if (puntoVenta.Count() > 5)
+                    {
+                        MessageBox.Show($"Error: el punto de  venta tiene {puntoVenta.Count()}");
+                    }
+
                     string numeroComprobante = worksheet.Cell(fila, indiceColumnaComprobante).Value.ToString().PadLeft(8, '0');
+                    if (numeroComprobante.Count() > 8)
+                    {
+                        MessageBox.Show($"Error: el numero de comprobante tiene {numeroComprobante.Count()}");
+                    }
 
                     // Valor de referencia COMPLETO
                     string referencia = $"{puntoVenta}{tipoMapeado}{numeroComprobante}";
 
                     // Obtener valor de la columna Neto Gravado
+                    double netoGravado = 0;
                     string valorCeldaNetoGravado = worksheet.Cell(fila, indiceColumnaNetoGravado).GetString();
                     string valorCeldaNetoGravadoSinComa = valorCeldaNetoGravado.Replace(",", ".");
-                    double netoGravado = double.Parse(valorCeldaNetoGravadoSinComa, CultureInfo.InvariantCulture);
+                    if (valorCeldaNetoGravadoSinComa != "")
+                    {
+                        netoGravado = Math.Round(double.Parse(valorCeldaNetoGravadoSinComa, CultureInfo.InvariantCulture), 2);                       
+                    }
 
                     // Obtener valor de la columna Neto No Gravado
+                    double netoNoGravado = 0;
                     string valorCeldaNetoNoGravado = worksheet.Cell(fila, indiceColumnaNetoNoGravado).GetString();
                     string valorCeldaNetoNoGravadoSinComa = valorCeldaNetoNoGravado.Replace(",", ".");
                     if (valorCeldaNetoNoGravadoSinComa != "")
                     {
-                        double netoNoGravado = double.Parse(valorCeldaNetoNoGravadoSinComa, CultureInfo.InvariantCulture);
-                    }             
+                        netoNoGravado = Math.Round(double.Parse(valorCeldaNetoNoGravadoSinComa, CultureInfo.InvariantCulture), 2);
+                    }
 
                     // Obtener valor de la columna IVA
+                    double IVA = 0;
                     string valorCeldaIVA = worksheet.Cell(fila, indiceColumnaIVA).GetString();
                     string valorCeldaIVASinComa = valorCeldaIVA.Replace(",", ".");
-                    double IVA = double.Parse(valorCeldaIVASinComa, CultureInfo.InvariantCulture);
+                    if (valorCeldaIVASinComa != "")
+                    {
+                        IVA = Math.Round(double.Parse(valorCeldaIVASinComa, CultureInfo.InvariantCulture), 2);
+                    }
 
                     // Obtener valor de la columna Total
+                    double total = 0;
                     string valorCeldaTotal = worksheet.Cell(fila, indiceColumnaImporteTotal).GetString();
                     string valorCeldaTotalSinComa = valorCeldaTotal.Replace(",", ".");
-                    double total = double.Parse(valorCeldaTotalSinComa, CultureInfo.InvariantCulture);
+                    if (valorCeldaTotalSinComa != "")
+                    {
+                        total = Math.Round(double.Parse(valorCeldaTotalSinComa, CultureInfo.InvariantCulture), 2);
+                        if (total == 0)
+                        {
+                            MessageBox.Show($"Error: el total de la fila {fila} es {total}");
+                        }
+                    }
 
                     // Obtener valor de la columna Texto
                     string valorCeldaTexto = worksheet.Cell(fila, indiceColumnaTexto).GetString();
@@ -548,7 +645,7 @@ namespace FB60_SAP
                     string valorCeldaIndicador = worksheet.Cell(fila, indiceColumnaIndicador).GetString();
 
                     // Obtener valor de la cuenta mayor
-                    string valorCuentaMayor = ExtraerCuentaMayor(valorCeldaTexto.Split('-')[1]).ToString();
+                    string valorCuentaMayor = ExtraerCuentaMayor(valorCeldaTexto.Split('-')[1].ToUpper()).ToString();
                     if (valorCuentaMayor == "-1")
                     {
                         MessageBox.Show("Error al mapear la cuenta mayor");
@@ -556,14 +653,14 @@ namespace FB60_SAP
 
                     // Obtener valor codigo acreedor
                     string valorNombreAcreedor = worksheet.Cell(fila, indiceColumnaDenominacionEmisor).GetString();
-                    long codigoAcreedor = ExtraerCodigoAcreedor(valorNombreAcreedor);
-                    if (codigoAcreedor == -1)
+                    string codigoAcreedor = ExtraerCodigoAcreedor(valorNombreAcreedor.ToUpper());
+                    if (codigoAcreedor == "-1")
                     {
                         MessageBox.Show("Error al mapear el codigo de acreedor");
                     }
 
                     // Obtener valor de centro costos
-                    string valorCentroCosto = ExtraerCentroCosto(valorCeldaTexto.Split('-')[0]).ToString();
+                    string valorCentroCosto = ExtraerCentroCosto(valorCeldaTexto.Split('-')[0].ToUpper()).ToString();
                     if (valorCentroCosto == "-1")
                     {
                         MessageBox.Show("Error al mapear el centro costo");
@@ -585,7 +682,8 @@ namespace FB60_SAP
                     }
 
                     // Neto + IVA
-                    string netoConIva = (IVA + netoGravado).ToString();
+                    string netoConIva = Math.Round((IVA + netoGravado), 2).ToString();
+                    netoConIva = netoConIva.Replace(",", ".");
 
                     // Tipo de venta
                     string tipoVenta = valorCeldaTexto.Split('-')[0].ToString();
@@ -593,8 +691,41 @@ namespace FB60_SAP
                     // Categoria de venta
                     string categoriaVenta = valorCeldaTexto.Split('-')[1].ToString();
 
-                    MessageBox.Show($"Fecha convertida:{stringFecha}, Cuenta mayor:{valorCuentaMayor}, Referencia:{referencia}, Centro costo:{valorCentroCosto}, Codigo acreedor: {codigoAcreedor}, Fecha contabilidad:{fechaContabilidadConvertida}, Neto con IVA:{netoConIva.Replace(',', '.')}, Tipo Venta:{tipoVenta}, Categoria Venta: {categoriaVenta}");
+                    worksheetSalida.Cell(filaSalida, 1).Value = fecha;
+                    worksheetSalida.Cell(filaSalida, 2).Value = worksheet.Cell(fila, indiceColumnaTipo).GetString();
+                    worksheetSalida.Cell(filaSalida, 3).Value = worksheet.Cell(fila, indiceColumnaPuntoVenta).GetString();
+                    worksheetSalida.Cell(filaSalida, 4).Value = worksheet.Cell(fila, indiceColumnaComprobante).GetString();
+                    worksheetSalida.Cell(filaSalida, 5).Value = worksheet.Cell(fila, indiceColumnaComprobanteVentaHasta).GetString();
+                    worksheetSalida.Cell(filaSalida, 6).Value = worksheet.Cell(fila, indiceColumnaCodigoAutorizacion).GetString();
+                    worksheetSalida.Cell(filaSalida, 7).Value = worksheet.Cell(fila, indiceColumnaTipoDocEmisor).GetString();
+                    worksheetSalida.Cell(filaSalida, 8).Value = worksheet.Cell(fila, indiceColumnaNroDocEmisor).GetString();
+                    worksheetSalida.Cell(filaSalida, 9).Value = worksheet.Cell(fila, indiceColumnaDenominacionEmisor).GetString();
+                    worksheetSalida.Cell(filaSalida, 10).Value = worksheet.Cell(fila, indiceColumnaTipoCambio).GetString();
+                    worksheetSalida.Cell(filaSalida, 11).Value = worksheet.Cell(fila, indiceColumnaMoneda).GetString();
+                    worksheetSalida.Cell(filaSalida, 12).Value = netoGravado.ToString(CultureInfo.InvariantCulture);
+                    worksheetSalida.Cell(filaSalida, 13).Value = netoNoGravado.ToString(CultureInfo.InvariantCulture);
+                    worksheetSalida.Cell(filaSalida, 14).Value = worksheet.Cell(fila, indiceColumnaOperacionesExentas).GetString();
+                    worksheetSalida.Cell(filaSalida, 15).Value = worksheet.Cell(fila, indiceColumnaOtrosTributos).GetString();
+                    worksheetSalida.Cell(filaSalida, 16).Value = IVA.ToString(CultureInfo.InvariantCulture);
+                    worksheetSalida.Cell(filaSalida, 17).Value = total.ToString(CultureInfo.InvariantCulture);
+                    worksheetSalida.Cell(filaSalida, 18).Value = valorCeldaIndicador;
+                    worksheetSalida.Cell(filaSalida, 19).Value = valorCeldaTexto;
+                    worksheetSalida.Cell(filaSalida, 20).Value = stringFecha;
+                    worksheetSalida.Cell(filaSalida, 21).Value = valorCuentaMayor;
+                    worksheetSalida.Cell(filaSalida, 22).Value = codigoAcreedor.ToString(CultureInfo.InvariantCulture);
+                    worksheetSalida.Cell(filaSalida, 23).Value = referencia;
+                    worksheetSalida.Cell(filaSalida, 24).Value = valorCentroCosto;
+                    worksheetSalida.Cell(filaSalida, 25).Value = fechaContabilidadConvertida;
+                    worksheetSalida.Cell(filaSalida, 26).Value = netoConIva.ToString(CultureInfo.InvariantCulture);
+                    worksheetSalida.Cell(filaSalida, 27).Value = tipoVenta;
+                    worksheetSalida.Cell(filaSalida, 28).Value = categoriaVenta;
+                    worksheetSalida.Cell(filaSalida, 29).Value = tipoMapeado.ToString();
+
+                    filaSalida++;
                 }
+
+                // Al final del ciclo, guarda el archivo de salida:
+                workbookSalida.SaveAs(rutaArchivoFinal);
             }
         }
 
@@ -635,7 +766,7 @@ namespace FB60_SAP
             return ObtenerValorDeDiccionario(DiccionarioTiposFacturas.diccionarioTiposFacturas, normalizado);
         }
 
-        static long ExtraerCodigoAcreedor(string nombre)
+        static string ExtraerCodigoAcreedor(string nombre)
         {
             // Encontrar la clave más cercana en el diccionario usando Levenshtein, pero solo si está dentro del umbral
             var resultado = DiccionarioCodigosAcreedores.diccionarioCodigosAcreedores.Keys
@@ -646,14 +777,14 @@ namespace FB60_SAP
             if (resultado != null)
             {
                 string nombreMapeado = resultado.Key;
-                long codigo = DiccionarioCodigosAcreedores.diccionarioCodigosAcreedores[nombreMapeado];
+                string codigo = DiccionarioCodigosAcreedores.diccionarioCodigosAcreedores[nombreMapeado].ToString();
                 MessageBox.Show($"El nombre mapeado para {nombre} es {nombreMapeado} con el codigo {codigo}");
                 return codigo;
             }
             else
             {
                 Console.WriteLine("No se encontró un mapeo adecuado para el nombre.");
-                return -1;
+                return "-1";
             }
         }
 
@@ -707,6 +838,7 @@ namespace FB60_SAP
 
         static long ObtenerValorDeDiccionario(Dictionary<string, long> dictionary, string key)
         {
+            key = key.RemoveWhiteSpaces();
             if (dictionary.TryGetValue(key, out long value))
             {
                 return value;
