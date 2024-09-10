@@ -174,8 +174,6 @@ namespace FB60_SAP
 
             // Calcular el diccionario y almacenarlo en la clase estática
             DiccionarioCodigosAcreedores.CalcularDiccionario(filepathDiccionario);
-
-            MessageBox.Show("Diccionario creado");
         }
 
         private void SeleccionarArchivo(TextBox textBox)
@@ -202,8 +200,10 @@ namespace FB60_SAP
             // Obtener la ruta del directorio donde está el ejecutable
             string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
+            MessageBox.Show(baseDirectory);
+
             // Construir la ruta relativa al script dentro del repositorio
-            string scriptRelativePath = Path.Combine(baseDirectory, @"Script\Script.vbs");
+            string scriptRelativePath = Path.Combine(baseDirectory, @"..\..\..\..\Script\SCRIPT_SAP.vbs");
 
             // Ejecutar el script
             ProcessStartInfo startInfo = new ProcessStartInfo
@@ -286,13 +286,13 @@ namespace FB60_SAP
                 worksheetSalida.Cell(1, 27).Value = "tipo venta";
                 worksheetSalida.Cell(1, 28).Value = "categoria venta";
                 worksheetSalida.Cell(1, 29).Value = "tipo factura";
+                worksheetSalida.Cell(1, 30).Value = "Detalle";
+            
 
-                int filaSalida = 2; // Fila inicial en el nuevo Excel (la 1 es para encabezados)
+            int filaSalida = 2; // Fila inicial en el nuevo Excel (la 1 es para encabezados)
 
                 // Obtener el directorio base donde está el ejecutable
                 string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-
-                MessageBox.Show(baseDirectory);
 
                 // Construir la ruta de la carpeta donde se guardará el archivo
                 string rutaGuardado = Path.Combine(baseDirectory, @"..\..\..\..\Script\Data");
@@ -398,10 +398,11 @@ namespace FB60_SAP
                     if (codigoAcreedor == "-1")
                     {
                         MessageBox.Show("Error al mapear el codigo de acreedor");
-                    }
+                        worksheetSalida.Cell(fila, 30).Value = "No esta en el diccionario de ACREEDORES";
+                }
 
-                    // Obtener valor de centro costos
-                    string valorCentroCosto = ExtraerCentroCosto(valorCeldaTexto.Split('-')[0].ToUpper()).ToString();
+                // Obtener valor de centro costos
+                string valorCentroCosto = ExtraerCentroCosto(valorCeldaTexto.Split('-')[0].ToUpper()).ToString();
                     if (valorCentroCosto == "-1")
                     {
                         MessageBox.Show("Error al mapear el centro costo");
@@ -467,6 +468,8 @@ namespace FB60_SAP
 
                 // Al final del ciclo, guarda el archivo de salida:
                 workbookSalida.SaveAs(rutaArchivoFinal);
+
+                MessageBox.Show("Transformación terminada");
             }
         }
 

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FB60-SAP")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4be688294732460269c95a3e8e76a57095caab57")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7e404c16c7f9cf513b523d035b1b87fb21b4e310")]
 [assembly: System.Reflection.AssemblyProductAttribute("FB60-SAP")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FB60-SAP")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

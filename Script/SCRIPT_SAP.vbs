@@ -34,7 +34,6 @@ Do While i <= lastRow
     cuentaMayor = Trim(CStr(objSheet.Cells(i, 21).Value))
     indicadorImpuesto = Trim(CStr(objSheet.Cells(i, 19).Value))
     texto = Trim(CStr(objSheet.Cells(i, 18).Value))
-    MsgBox "El texto es " & texto
     acreedor = Trim(CStr(objSheet.Cells(i, 22).Value))
     referencia = Trim(CStr(objSheet.Cells(i, 23).Value))
     centroCosto = Trim(CStr(objSheet.Cells(i, 24).Value))
@@ -60,7 +59,7 @@ Do While i <= lastRow
     session.findById("wnd[0]/usr/tabsTS/tabpMAIN/ssubPAGE:SAPLFDCB:0010/chkINVFO-XMWST").setFocus
     session.findById("wnd[0]/usr/tabsTS/tabpMAIN/ssubPAGE:SAPLFDCB:0010/chkINVFO-XMWST").selected = true
     session.findById("wnd[0]").sendVKey 0
-    If  tipoMapeado != "C" Then
+    If tipoMapeado != "C" Then
     	session.findById("wnd[0]").sendVKey 0
     End If
     session.findById("wnd[0]/usr/tabsTS/tabpMAIN/ssubPAGE:SAPLFDCB:0010/ctxtINVFO-SGTXT").text = texto
@@ -100,6 +99,8 @@ Do While i <= lastRow
     	session.findById("wnd[0]").sendVKey 0
     End If
     session.findById("wnd[0]/tbar[0]/btn[11]").press
+
+    objSheet.Cells(i, 30).Value = "Cargado correctamente"
 
     i = i + 1
 Loop
