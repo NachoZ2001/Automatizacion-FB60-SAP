@@ -33,6 +33,7 @@
             buttonSeleccionarExcel = new Button();
             buttonEjecutarScript = new Button();
             buttonTransformarExcel = new Button();
+            buttonEjecutarScriptOP = new Button();
             SuspendLayout();
             // 
             // textBoxRutaExcel
@@ -78,7 +79,7 @@
             buttonEjecutarScript.Name = "buttonEjecutarScript";
             buttonEjecutarScript.Size = new Size(294, 41);
             buttonEjecutarScript.TabIndex = 3;
-            buttonEjecutarScript.Text = "Ejecutar Script";
+            buttonEjecutarScript.Text = "Ejecutar Script carga facturas";
             buttonEjecutarScript.UseVisualStyleBackColor = false;
             buttonEjecutarScript.Click += buttonEjecutarScript_Click;
             // 
@@ -96,12 +97,27 @@
             buttonTransformarExcel.UseVisualStyleBackColor = false;
             buttonTransformarExcel.Click += buttonTransformarExcel_Click;
             // 
+            // buttonEjecutarScriptOP
+            // 
+            buttonEjecutarScriptOP.BackColor = Color.BlueViolet;
+            buttonEjecutarScriptOP.FlatStyle = FlatStyle.Popup;
+            buttonEjecutarScriptOP.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            buttonEjecutarScriptOP.ForeColor = Color.White;
+            buttonEjecutarScriptOP.Location = new Point(12, 269);
+            buttonEjecutarScriptOP.Name = "buttonEjecutarScriptOP";
+            buttonEjecutarScriptOP.Size = new Size(294, 41);
+            buttonEjecutarScriptOP.TabIndex = 5;
+            buttonEjecutarScriptOP.Text = "Ejecutar Script carga OP";
+            buttonEjecutarScriptOP.UseVisualStyleBackColor = false;
+            buttonEjecutarScriptOP.Click += buttonEjecutarScriptOP_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Purple;
-            ClientSize = new Size(325, 262);
+            ClientSize = new Size(325, 322);
+            Controls.Add(buttonEjecutarScriptOP);
             Controls.Add(buttonTransformarExcel);
             Controls.Add(buttonEjecutarScript);
             Controls.Add(buttonSeleccionarExcel);
@@ -120,5 +136,6 @@
         private Button buttonSeleccionarExcel;
         private Button buttonEjecutarScript;
         private Button buttonTransformarExcel;
+        private Button buttonEjecutarScriptOP;
     }
 }

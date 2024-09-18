@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Program Files\\Sublime Merge\\Automatizacion-FB60-SAP\\FB60-SAP\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5CDF83A6-4DF3-417F-9E2E-03682469A2B8}|FB60-SAP.csproj|c:\\program files\\sublime merge\\automatizacion-fb60-sap\\fb60-sap\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5CDF83A6-4DF3-417F-9E2E-03682469A2B8}|FB60-SAP.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{5CDF83A6-4DF3-417F-9E2E-03682469A2B8}|FB60-SAP.csproj|C:\\Program Files\\Sublime Merge\\Automatizacion-FB60-SAP\\FB60-SAP\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{5CDF83A6-4DF3-417F-9E2E-03682469A2B8}|FB60-SAP.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CDF83A6-4DF3-417F-9E2E-03682469A2B8}|FB60-SAP.csproj|c:\\program files\\sublime merge\\automatizacion-fb60-sap\\fb60-sap\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CDF83A6-4DF3-417F-9E2E-03682469A2B8}|FB60-SAP.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,31 +18,32 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Form1.cs",
               "DocumentMoniker": "C:\\Program Files\\Sublime Merge\\Automatizacion-FB60-SAP\\FB60-SAP\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",
               "ToolTip": "C:\\Program Files\\Sublime Merge\\Automatizacion-FB60-SAP\\FB60-SAP\\Form1.cs",
               "RelativeToolTip": "Form1.cs",
-              "ViewState": "AgIAAEUCAAAAAAAAAAArwFACAAAlAAAAAAAAAA==",
+              "ViewState": "AgIAAFkBAAAAAAAAAAAswDgBAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-02T12:33:39.951Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Form1.cs [Dise\u00F1o]",
               "DocumentMoniker": "C:\\Program Files\\Sublime Merge\\Automatizacion-FB60-SAP\\FB60-SAP\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",
               "ToolTip": "C:\\Program Files\\Sublime Merge\\Automatizacion-FB60-SAP\\FB60-SAP\\Form1.cs [Dise\u00F1o]",
               "RelativeToolTip": "Form1.cs [Dise\u00F1o]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-02T12:01:54.394Z"
+              "WhenOpened": "2024-09-02T12:01:54.394Z",
+              "EditorCaption": " [Dise\u00F1o]"
             }
           ]
         }
