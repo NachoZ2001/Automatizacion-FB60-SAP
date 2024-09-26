@@ -78,6 +78,7 @@ namespace FB60_SAP
 
         private void buttonTransformarExcel_Click(object sender, EventArgs e)
         {
+            
             using (var workbook = new XLWorkbook(textBoxRutaExcel.Text))
             {
                 var worksheet = workbook.Worksheet(1);
@@ -170,7 +171,7 @@ namespace FB60_SAP
                     stringFecha = stringFecha.Split(' ')[0];
 
                     // Obtener tipo comprobante
-                    char tipoMapeado = ExtraerTipoFactura(worksheet.Cell(fila, indiceColumnaTipo).GetString());
+                    char tipoMapeado = ExtraerTipoFactura(worksheet.Cell(fila, indiceColumnaTipo).GetString().Trim());
                     if (tipoMapeado == 'O')
                     {
                         MessageBox.Show("Error al mapear el tipo");
@@ -233,20 +234,20 @@ namespace FB60_SAP
                     }
 
                     // Obtener valor de la columna Texto
-                    string valorCeldaTexto = worksheet.Cell(fila, indiceColumnaTexto).GetString();
+                    string valorCeldaTexto = worksheet.Cell(fila, indiceColumnaTexto).GetString().Trim();
 
                     // Obtener valor de la columna Indicador
-                    string valorCeldaIndicador = worksheet.Cell(fila, indiceColumnaIndicador).GetString();
+                    string valorCeldaIndicador = worksheet.Cell(fila, indiceColumnaIndicador).GetString().Trim();
 
                     // Obtener valor de la cuenta mayor
-                    string valorCuentaMayor = ExtraerCuentaMayor(valorCeldaTexto.Split('-')[1].ToUpper()).ToString();
-                    if (valorCuentaMayor == "-1")
+                    string valorCuentaMayor = ExtraerCuentaMayor(valorCeldaTexto.Split('-')[1].ToUpper()).ToString().Trim();
+                    if (valorCuentaMayor == "0")
                     {
                         MessageBox.Show("Error al mapear la cuenta mayor");
                     }
 
                     // Obtener valor codigo acreedor
-                    string valorNombreAcreedor = worksheet.Cell(fila, indiceColumnaDenominacionEmisor).GetString();
+                    string valorNombreAcreedor = worksheet.Cell(fila, indiceColumnaDenominacionEmisor).GetString().Trim();
                     string codigoAcreedor = ExtraerCodigoAcreedor(valorNombreAcreedor.ToUpper());
                     if (codigoAcreedor == "-1")
                     {
@@ -255,8 +256,8 @@ namespace FB60_SAP
                     }
 
                     // Obtener valor de centro costos
-                    string valorCentroCosto = ExtraerCentroCosto(valorCeldaTexto.Split('-')[0].ToUpper()).ToString();
-                    if (valorCentroCosto == "-1")
+                    string valorCentroCosto = ExtraerCentroCosto(valorCeldaTexto.Split('-')[0].ToUpper()).ToString().Trim();
+                    if (valorCentroCosto == "0")
                     {
                         MessageBox.Show("Error al mapear el centro costo");
                     }
@@ -303,8 +304,8 @@ namespace FB60_SAP
                     worksheetSalida.Cell(filaSalida, 15).Value = worksheet.Cell(fila, indiceColumnaOtrosTributos).GetString();
                     worksheetSalida.Cell(filaSalida, 16).Value = IVA.ToString(CultureInfo.InvariantCulture);
                     worksheetSalida.Cell(filaSalida, 17).Value = total.ToString(CultureInfo.InvariantCulture);
-                    worksheetSalida.Cell(filaSalida, 18).Value = valorCeldaIndicador;
-                    worksheetSalida.Cell(filaSalida, 19).Value = valorCeldaTexto;
+                    worksheetSalida.Cell(filaSalida, 18).Value = valorCeldaTexto;
+                    worksheetSalida.Cell(filaSalida, 19).Value = valorCeldaIndicador;
                     worksheetSalida.Cell(filaSalida, 20).Value = stringFecha;
                     worksheetSalida.Cell(filaSalida, 21).Value = valorCuentaMayor;
                     worksheetSalida.Cell(filaSalida, 22).Value = codigoAcreedor.ToString(CultureInfo.InvariantCulture);
@@ -426,7 +427,7 @@ namespace FB60_SAP
         // Función para buscar valor en el diccionario
         static char ObtenerValorDeDiccionario(Dictionary<string, char> dictionary, string key)
         {
-            if (dictionary.TryGetValue(key, out char valor))
+            if (dictionary.TryGetValue(key.Trim(), out char valor))
             {
                 return valor;
             }
@@ -436,20 +437,30 @@ namespace FB60_SAP
         static long ObtenerValorDeDiccionario(Dictionary<string, long> dictionary, string key)
         {
             key = key.RemoveWhiteSpaces();
-            if (dictionary.TryGetValue(key, out long value))
+            // Recorre todas las claves del diccionario
+            foreach (var entry in dictionary)
             {
-                return value;
+                // Verifica si la clave del diccionario contiene la palabra clave (ignorando mayúsculas)
+                if (entry.Key.IndexOf(key.Trim(), StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    return entry.Value; // Retorna el valor si encuentra una coincidencia parcial
+                }
             }
-            return -1; // Valor por defecto o manejo de error según necesidad
+            return 0; // Valor por defecto si no encuentra una coincidencia/ Valor por defecto o manejo de error según necesidad
         }
 
         static long ObtenerValorDeDiccionarioCuentaMayor(Dictionary<string, long> dictionary, string key)
         {
-            if (dictionary.TryGetValue(key, out long value))
+            // Recorre todas las claves del diccionario
+            foreach (var entry in dictionary)
             {
-                return value;
+                // Verifica si la clave del diccionario contiene la palabra clave (ignorando mayúsculas)
+                if (entry.Key.IndexOf(key.Trim(), StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    return entry.Value; // Retorna el valor si encuentra una coincidencia parcial
+                }
             }
-            return 8001020100; // Valor por defecto o manejo de error según necesidad
+            return 0; // Valor por defecto si no encuentra una coincidencia
         }
 
         // Función para normalizar cadena de AFIP (extraer tipo y letra después del identificador numérico)
@@ -509,6 +520,10 @@ namespace FB60_SAP
             diccionarioCuentasMayor = new Dictionary<string, long>
             {
                 {"GASTOS COMBUSTIBLES", 8001070200},
+                {"GASTOS OBRA SOCIAL", 8001010202},
+                {"GASTOS RODADOS", 8001150200},
+                {"GASTOS HOTEL", 8001050000},
+                {"GASTOS COMIDA", 8001050000},
                 {"GASTOS GENERALES", 8001020100},
                 {"GASTOS CORREO Y MENSAJERIA", 8001030200},
                 {"GASTOS ELECTRICIDAD", 8001090200},
@@ -605,6 +620,8 @@ namespace FB60_SAP
             {
                 {"VTAS", 5130010401},
                 {"VTA", 5130010401},
+                {"MKT", 5130010401},
+                {"MRKT", 5130010401},
                 {"ADM", 5130010802},
             };
         }
