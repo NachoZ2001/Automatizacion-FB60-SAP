@@ -56,7 +56,7 @@ namespace FB60_SAP
             MessageBox.Show(baseDirectory);
 
             // Construir la ruta relativa al script dentro del repositorio
-            string scriptRelativePath = Path.Combine(baseDirectory, @"..\..\..\..\Script\SCRIPT_SAP.vbs");
+            string scriptRelativePath = Path.Combine(baseDirectory, @"..\..\..\..\Script\SCRIPT_SAP_FACTURAS.vbs");
 
             // Ejecutar el script
             ProcessStartInfo startInfo = new ProcessStartInfo
@@ -103,6 +103,7 @@ namespace FB60_SAP
                 int indiceColumnaImporteTotal = ObtenerIndiceColumna(worksheet, "Imp. Total");
                 int indiceColumnaTexto = ObtenerIndiceColumna(worksheet, "texto");
                 int indiceColumnaIndicador = ObtenerIndiceColumna(worksheet, "indicador");
+                int indiceColumnaTipoOP = ObtenerIndiceColumna(worksheet, "tipo_OP");
 
                 int ultimaFila = worksheet.LastRowUsed().RowNumber();
 
@@ -141,7 +142,11 @@ namespace FB60_SAP
                 worksheetSalida.Cell(1, 28).Value = "categoria venta";
                 worksheetSalida.Cell(1, 29).Value = "tipo factura";
                 worksheetSalida.Cell(1, 30).Value = "Detalle";
-
+                worksheetSalida.Cell(1, 31).Value = "fecha_OP";
+                worksheetSalida.Cell(1, 32).Value = "texto_OP";
+                worksheetSalida.Cell(1, 33).Value = "cuenta_OP";
+                worksheetSalida.Cell(1, 34).Value = "tipo_OP";
+                worksheetSalida.Cell(1, 35).Value = "importe_OP";
 
                 int filaSalida = 2; // Fila inicial en el nuevo Excel (la 1 es para encabezados)
 
@@ -239,6 +244,9 @@ namespace FB60_SAP
                     // Obtener valor de la columna Indicador
                     string valorCeldaIndicador = worksheet.Cell(fila, indiceColumnaIndicador).GetString().Trim();
 
+                    // Obtener valor de la columna cuenta OP
+                    string valorCeldaTipoOP = worksheet.Cell(fila, indiceColumnaTipoOP).GetString().Trim();
+
                     // Obtener valor de la cuenta mayor
                     string valorCuentaMayor = ExtraerCuentaMayor(valorCeldaTexto.Split('-')[1].ToUpper()).ToString().Trim();
                     if (valorCuentaMayor == "0")
@@ -255,11 +263,21 @@ namespace FB60_SAP
                         worksheetSalida.Cell(fila, 30).Value = "No esta en el diccionario de ACREEDORES";
                     }
 
+                    // Obtener valor del texto OP
+                    string valorCeldaTexto_OP = $"PAGO {valorNombreAcreedor}";
+
                     // Obtener valor de centro costos
                     string valorCentroCosto = ExtraerCentroCosto(valorCeldaTexto.Split('-')[0].ToUpper()).ToString().Trim();
                     if (valorCentroCosto == "0")
                     {
                         MessageBox.Show("Error al mapear el centro costo");
+                    }
+
+                    // Obtener valor de cuenta OP
+                    string valorCuentaOP = ExtraerCuentaOP(valorCeldaTipoOP).ToString().Trim().ToUpper();
+                    if (valorCuentaOP == "0")
+                    {
+                        MessageBox.Show("Error al mapear la cuenta de OP");
                     }
 
                     // Obtener valor de la columna Fecha Contabilidad
@@ -285,7 +303,20 @@ namespace FB60_SAP
                     string tipoVenta = valorCeldaTexto.Split('-')[0].ToString();
 
                     // Categoria de venta
-                    string categoriaVenta = valorCeldaTexto.Split('-')[1].ToString();
+                    string categoriaVenta = " ";
+                    if (double.Parse(valorCeldaNetoNoGravado) > 0 && double.Parse(valorCeldaIVA) > 0)
+                    {
+                        categoriaVenta = "GASTOS COMBUSTIBLE";
+                    }
+
+                    // Obtener valor fecha OP
+                    
+                    string dia = DateTime.Now.Day.ToString();
+                    string mes = DateTime.Now.Month.ToString();
+                    string año = DateTime.Now.Year.ToString();
+                    string fechaOP = $"{dia}{mes}{año}";
+
+                    string importeOP = valorCeldaTotal.Replace(".", ",");
 
                     worksheetSalida.Cell(filaSalida, 1).Value = fecha;
                     worksheetSalida.Cell(filaSalida, 2).Value = worksheet.Cell(fila, indiceColumnaTipo).GetString();
@@ -316,6 +347,11 @@ namespace FB60_SAP
                     worksheetSalida.Cell(filaSalida, 27).Value = tipoVenta;
                     worksheetSalida.Cell(filaSalida, 28).Value = categoriaVenta;
                     worksheetSalida.Cell(filaSalida, 29).Value = tipoMapeado.ToString();
+                    worksheetSalida.Cell(filaSalida, 31).Value = fechaOP;
+                    worksheetSalida.Cell(filaSalida, 32).Value = valorCeldaTexto_OP;
+                    worksheetSalida.Cell(filaSalida, 33).Value = valorCuentaOP;
+                    worksheetSalida.Cell(filaSalida, 34).Value = valorCeldaTipoOP;
+                    worksheetSalida.Cell(filaSalida, 35).Value = importeOP;
 
                     filaSalida++;
                 }
@@ -353,6 +389,11 @@ namespace FB60_SAP
         static long ExtraerCentroCosto(string tipo)
         {
             return ObtenerValorDeDiccionario(DiccionarioCuentasCentroCosto.diccionarioCuentasCentroCosto, tipo);
+        }
+
+        static long ExtraerCuentaOP(string tipo)
+        {
+            return ObtenerValorDeDiccionario(DiccionarioCuentasOP.diccionarioCuentasOP, tipo);
         }
 
         static char ExtraerTipoFactura(string tipo)
@@ -538,6 +579,7 @@ namespace FB60_SAP
                 {"GASTOS HONORARIOS PROFESIONALES", 8001130000},
                 {"GASTOS HONORARIOS AUDITORIA", 8001110000},
                 {"GASTOS DIF DE CAMBIO NEGATIVA REALIZADA", 6603020300},
+                {"GASTOS CAPACITACION", 8001010600},
             };
         }
 
@@ -623,6 +665,21 @@ namespace FB60_SAP
                 {"MKT", 5130010401},
                 {"MRKT", 5130010401},
                 {"ADM", 5130010802},
+            };
+        }
+
+    }
+
+    public static class DiccionarioCuentasOP
+    {
+        public static Dictionary<string, long> diccionarioCuentasOP{ get; private set; }
+
+        static DiccionarioCuentasOP()
+        {
+            diccionarioCuentasOP = new Dictionary<string, long>
+            {
+                {"CAJA", 1001010500},
+                {"TARJETA", 2241040006},
             };
         }
 

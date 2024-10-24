@@ -34,6 +34,9 @@ Do While i <= lastRow
     cuentaMayor = Trim(CStr(objSheet.Cells(i, 21).Value))
     indicadorImpuesto = Trim(CStr(objSheet.Cells(i, 19).Value))
     texto = Trim(CStr(objSheet.Cells(i, 18).Value))
+    If Len(texto) > 50 Then
+    	texto = Left(texto, 50)
+    End If
     acreedor = Trim(CStr(objSheet.Cells(i, 22).Value))
     referencia = Trim(CStr(objSheet.Cells(i, 23).Value))
     centroCosto = Trim(CStr(objSheet.Cells(i, 24).Value))
@@ -42,7 +45,7 @@ Do While i <= lastRow
     categoriaVenta = Trim(CStr(objSheet.Cells(i, 28).Value))
     tipoMapeado = Trim(CStr(objSheet.Cells(i, 29).Value))	
 
-    If categoriaVenta = "GASTOS COMBUSTIBLES" Then
+    If categoriaVenta = "GASTOS COMBUSTIBLES" Or categoriaVenta = "COMBUSTIBLES" Or categoriaVenta = "COMBUSTIBLE" Then
         neto = Trim(CStr(objSheet.Cells(i, 12).Value))
         iva = Trim(CStr(objSheet.Cells(i, 16).Value))
         noGravado = Trim(CStr(objSheet.Cells(i, 13).Value))
@@ -58,10 +61,12 @@ Do While i <= lastRow
     session.findById("wnd[0]/usr/tabsTS/tabpMAIN/ssubPAGE:SAPLFDCB:0010/txtINVFO-WRBTR").text = importe
     session.findById("wnd[0]/usr/tabsTS/tabpMAIN/ssubPAGE:SAPLFDCB:0010/chkINVFO-XMWST").setFocus
     session.findById("wnd[0]/usr/tabsTS/tabpMAIN/ssubPAGE:SAPLFDCB:0010/chkINVFO-XMWST").selected = true
-    session.findById("wnd[0]").sendVKey 0
-    If tipoMapeado != "C" Then
+    statusBarMessageType = session.findById("wnd[0]/sbar").MessageType
+    While statusBarMessageType = "E" Or statusBarMessageType = "W"
     	session.findById("wnd[0]").sendVKey 0
-    End If
+        statusBarMessageType = session.findById("wnd[0]/sbar").MessageType
+    Wend
+
     session.findById("wnd[0]/usr/tabsTS/tabpMAIN/ssubPAGE:SAPLFDCB:0010/ctxtINVFO-SGTXT").text = texto
 
     If categoriaVenta = "GASTOS COMBUSTIBLES" Then
@@ -88,17 +93,21 @@ Do While i <= lastRow
 
     session.findById("wnd[0]/usr/subITEMS:SAPLFSKB:0100/tblSAPLFSKBTABLE/ctxtACGL_ITEM-KOSTL[20,0]").setFocus
     session.findById("wnd[0]/usr/subITEMS:SAPLFSKB:0100/tblSAPLFSKBTABLE/ctxtACGL_ITEM-KOSTL[20,0]").caretPosition = 10
-    If tipoMapeado = "C" Then
-	session.findById("wnd[0]").sendVKey 0
-	session.findById("wnd[0]").sendVKey 0
-	session.findById("wnd[0]").sendVKey 0
-    End If
+    MsgBox "Este es un mensaje informativo.", vbInformation, "Título del Mensaje"
     session.findById("wnd[0]/tbar[1]/btn[9]").press
-    session.findById("wnd[0]").sendVKey 0
-    If tipoMapeado != "C" Then
+    statusBarMessageType = session.findById("wnd[0]/sbar").MessageType
+    While statusBarMessageType = "E" Or statusBarMessageType = "W"
     	session.findById("wnd[0]").sendVKey 0
-    End If
+        statusBarMessageType = session.findById("wnd[0]/sbar").MessageType
+        statusBarMessage = session.findById("wnd[0]/sbar").Text
+    Wend
     session.findById("wnd[0]/tbar[0]/btn[11]").press
+    statusBarMessageType = session.findById("wnd[0]/sbar").MessageType
+    While statusBarMessageType = "E" Or statusBarMessageType = "W"
+    	session.findById("wnd[0]").sendVKey 0
+        statusBarMessageType = session.findById("wnd[0]/sbar").MessageType
+        statusBarMessage = session.findById("wnd[0]/sbar").Text
+    Wend
 
     objSheet.Cells(i, 30).Value = "Cargado correctamente"
 
