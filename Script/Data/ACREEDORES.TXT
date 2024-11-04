@@ -1,4 +1,4 @@
-####PPO                                Directorio de acreedores                               Hora 21:20:53     Fecha 17.10.2024
+####PPO                                Directorio de acreedores                               Hora 08:26:47     Fecha 31.10.2024
 ##                                                                                              RFKKVZ00/ELIANA   Pág.           1
 
 	Clasific.		Proveedor
@@ -70,6 +70,17 @@
 	*
 	Presbitero Juan G. Gonzalez y Aragon º207,
 	1812 #######
+	ARGENTINA
+
+	Acreedor	1005260		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	DON ITALO			Gr.cuentas	Z001
+	Creado por	GERMAN			Creado el	22.10.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	DON ITALO SA							Idioma	ES	Teléfono 1	3464 69 5300
+	DON ITALO
+	RUTA NACIONAL Nº 33  KM. 736,80
+	2170 CASILDA
 	ARGENTINA
 
 	Acreedor	1005261		Sociedad			Nombre de la sociedad
@@ -1515,13 +1526,13 @@
 
 	Acreedor	1005735		Sociedad			Nombre de la sociedad
 	Sección			DATOS TÉCNICOS
-	Conc.búsq.	LAB DE INV			Gr.cuentas	Z001
+	Conc.búsq.	NOSIS LAB			Gr.cuentas	Z001
 	Creado por	ZMDGDATA			Creado el	23.08.2023
 	Sección			COMUNICACIÓN CON ACREEDOR
-	LAB DE INV Y DESARROLLO SA							Idioma	ES
-	LAB DE INV Y DESARROLLO SA
+	NOSIS LAB DE INV. Y DESARROLLO S.A							Idioma	ES
+	NOSIS LAB DE INV. Y DESARROLLO S.A
 	SAN MARTIN 365
-	9999 BUENOS AIRES
+	1004 CABA
 	ARGENTINA
 
 	Acreedor	1005736		Sociedad			Nombre de la sociedad
@@ -6681,6 +6692,16 @@
 	2740 ARRECIFES
 	ARGENTINA
 
+	Acreedor	1017894		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	GESTORIA M			Gr.cuentas	Z001
+	Creado por	SAP_WFRT			Creado el	21.10.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	GESTORIA MARIO CHEMES ASOC SRL							Idioma	ES
+	25 DE MAYO 1718
+	3016 SNATO TOME
+	ARGENTINA
+
 	Acreedor	2000119		Sociedad			Nombre de la sociedad
 	Sección			DATOS TÉCNICOS
 	Conc.búsq.	DINATALE R			Gr.cuentas	Z002
@@ -9114,6 +9135,36 @@
 	VERONESE CLAUDIA MARCELA							Idioma	ES
 	BV GALVEZ 1780 DPTO 10
 	3000 SANTA FE
+	ARGENTINA
+
+	Acreedor	2001864		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	SIMONELLA			Gr.cuentas	Z002
+	Creado por	SAP_WFRT			Creado el	24.10.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	SIMONELLA WALTER EDUARDO							Idioma	ES
+	SAN MARTIN 4231
+	3000 SANTA FE
+	ARGENTINA
+
+	Acreedor	2001867		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	ITURRASPE			Gr.cuentas	Z002
+	Creado por	SAP_WFRT			Creado el	24.10.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	ITURRASPE BENITO							Idioma	ES
+	BV GALVEZ 1570
+	3000 SANTA FE
+	ARGENTINA
+
+	Acreedor	2001868		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	CARLINO PA			Gr.cuentas	Z002
+	Creado por	SAP_WFRT			Creado el	24.10.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	CARLINO PAMELA MELISA							Idioma	ES
+	COCHABAMBA 1054
+	2000 ROSARIO
 	ARGENTINA
 
 	Acreedor	3000030		Sociedad			Nombre de la sociedad
