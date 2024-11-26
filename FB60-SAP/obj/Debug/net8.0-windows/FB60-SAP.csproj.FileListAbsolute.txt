@@ -23,3 +23,28 @@ C:\Program Files\Sublime Merge\Automatizacion-FB60-SAP\FB60-SAP\obj\Debug\net8.0
 C:\Program Files\Sublime Merge\Automatizacion-FB60-SAP\FB60-SAP\obj\Debug\net8.0-windows\FB60-SAP.csproj.Up2Date
 C:\Program Files\Sublime Merge\Automatizacion-FB60-SAP\FB60-SAP\obj\Debug\net8.0-windows\FB60-SAP.sourcelink.json
 C:\Program Files\Sublime Merge\Automatizacion-FB60-SAP\FB60-SAP\obj\Debug\net8.0-windows\FB60_SAP.Form1.resources
+C:\Proyectos\Automatizacion-FB60-SAP\FB60-SAP\bin\Debug\net8.0-windows\FB60-SAP.exe
+C:\Proyectos\Automatizacion-FB60-SAP\FB60-SAP\bin\Debug\net8.0-windows\FB60-SAP.deps.json
+C:\Proyectos\Automatizacion-FB60-SAP\FB60-SAP\bin\Debug\net8.0-windows\FB60-SAP.runtimeconfig.json
+C:\Proyectos\Automatizacion-FB60-SAP\FB60-SAP\bin\Debug\net8.0-windows\FB60-SAP.dll
+C:\Proyectos\Automatizacion-FB60-SAP\FB60-SAP\bin\Debug\net8.0-windows\FB60-SAP.pdb
+C:\Proyectos\Automatizacion-FB60-SAP\FB60-SAP\bin\Debug\net8.0-windows\ClosedXML.dll
+C:\Proyectos\Automatizacion-FB60-SAP\FB60-SAP\bin\Debug\net8.0-windows\DocumentFormat.OpenXml.dll
+C:\Proyectos\Automatizacion-FB60-SAP\FB60-SAP\bin\Debug\net8.0-windows\ExcelNumberFormat.dll
+C:\Proyectos\Automatizacion-FB60-SAP\FB60-SAP\bin\Debug\net8.0-windows\Irony.dll
+C:\Proyectos\Automatizacion-FB60-SAP\FB60-SAP\bin\Debug\net8.0-windows\SixLabors.Fonts.dll
+C:\Proyectos\Automatizacion-FB60-SAP\FB60-SAP\bin\Debug\net8.0-windows\XLParser.dll
+C:\Proyectos\Automatizacion-FB60-SAP\FB60-SAP\obj\Debug\net8.0-windows\FB60-SAP.csproj.AssemblyReference.cache
+C:\Proyectos\Automatizacion-FB60-SAP\FB60-SAP\obj\Debug\net8.0-windows\FB60_SAP.Form1.resources
+C:\Proyectos\Automatizacion-FB60-SAP\FB60-SAP\obj\Debug\net8.0-windows\FB60-SAP.csproj.GenerateResource.cache
+C:\Proyectos\Automatizacion-FB60-SAP\FB60-SAP\obj\Debug\net8.0-windows\FB60-SAP.GeneratedMSBuildEditorConfig.editorconfig
+C:\Proyectos\Automatizacion-FB60-SAP\FB60-SAP\obj\Debug\net8.0-windows\FB60-SAP.AssemblyInfoInputs.cache
+C:\Proyectos\Automatizacion-FB60-SAP\FB60-SAP\obj\Debug\net8.0-windows\FB60-SAP.AssemblyInfo.cs
+C:\Proyectos\Automatizacion-FB60-SAP\FB60-SAP\obj\Debug\net8.0-windows\FB60-SAP.csproj.CoreCompileInputs.cache
+C:\Proyectos\Automatizacion-FB60-SAP\FB60-SAP\obj\Debug\net8.0-windows\FB60-SAP.sourcelink.json
+C:\Proyectos\Automatizacion-FB60-SAP\FB60-SAP\obj\Debug\net8.0-windows\FB60-SAP.csproj.Up2Date
+C:\Proyectos\Automatizacion-FB60-SAP\FB60-SAP\obj\Debug\net8.0-windows\FB60-SAP.dll
+C:\Proyectos\Automatizacion-FB60-SAP\FB60-SAP\obj\Debug\net8.0-windows\refint\FB60-SAP.dll
+C:\Proyectos\Automatizacion-FB60-SAP\FB60-SAP\obj\Debug\net8.0-windows\FB60-SAP.pdb
+C:\Proyectos\Automatizacion-FB60-SAP\FB60-SAP\obj\Debug\net8.0-windows\FB60-SAP.genruntimeconfig.cache
+C:\Proyectos\Automatizacion-FB60-SAP\FB60-SAP\obj\Debug\net8.0-windows\ref\FB60-SAP.dll

@@ -1,4 +1,4 @@
-####PPO                                Directorio de acreedores                               Hora 08:26:47     Fecha 31.10.2024
+####PPO                                Directorio de acreedores                               Hora 00:40:24     Fecha 22.11.2024
 ##                                                                                              RFKKVZ00/ELIANA   Pág.           1
 
 	Clasific.		Proveedor
@@ -576,6 +576,17 @@
 	EL MIRADOR SRL
 	PELLEGRINI y BOLIVAR
 	2820 ENTRE RÍOS
+	ARGENTINA
+
+	Acreedor	1005546		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	POZZO MIGU			Gr.cuentas	Z001
+	Creado por	ZMDGDATA			Creado el	23.08.2023
+	Sección			COMUNICACIÓN CON ACREEDOR
+	POZZO MIGUEL ROBERTO							Idioma	ES
+	POZZO MIGUEL ROBERTO
+	DIEGO PALMA 62
+	1642 BUENOS AIRES
 	ARGENTINA
 
 	Acreedor	1005551		Sociedad			Nombre de la sociedad
@@ -6571,6 +6582,16 @@
 	4332 SANTIAGO DEL ESTERO
 	ARGENTINA
 
+	Acreedor	1017734		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	ESTRELLA P			Gr.cuentas	Z001
+	Creado por	SAP_WFRT			Creado el	04.10.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	ESTRELLA POLAR S.A.							Idioma	ES
+	ESTRELLA POLAR S.A.
+	1648 BUENOS AIRES
+	ARGENTINA
+
 	Acreedor	1017853		Sociedad			Nombre de la sociedad
 	Sección			DATOS TÉCNICOS
 	Conc.búsq.	BOLSA DE C			Gr.cuentas	Z001
@@ -6700,6 +6721,178 @@
 	GESTORIA MARIO CHEMES ASOC SRL							Idioma	ES
 	25 DE MAYO 1718
 	3016 SNATO TOME
+	ARGENTINA
+
+	Acreedor	1017989		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	IRENE CULZ			Gr.cuentas	Z001
+	Creado por	RF_NIC			Creado el	01.11.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	IRENE CULZONI							Idioma	ES
+	IRENE CULZONI
+	RAFAELA
+	2300 RAFAELA
+	ARGENTINA
+
+	Acreedor	1018010		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	FIORITO TO			Gr.cuentas	Z001
+	Creado por	RF_NIC			Creado el	01.11.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	FIORITO TOMAS							Idioma	ES
+	FIORITO TOMAS
+	RAFAELA
+	2300 RAFAELA
+	ARGENTINA
+
+	Acreedor	1018011		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	FLEMATTI J			Gr.cuentas	Z001
+	Creado por	RF_NIC			Creado el	01.11.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	FLEMATTI JUAN MANUEL							Idioma	ES
+	FLEMATTI JUAN MANUEL
+	SANTA FE
+	3000 SANTA FE
+	ARGENTINA
+
+	Acreedor	1018012		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	RESTAURANT			Gr.cuentas	Z001
+	Creado por	RF_NIC			Creado el	01.11.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	RESTAURANT DEL CLUB SRL							Idioma	ES
+	RESTAURANT DEL CLUB SRL
+	ROSARIO
+	2000 ROSARIO
+	ARGENTINA
+
+	Acreedor	1018014		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	ERNESTO RO			Gr.cuentas	Z001
+	Creado por	RF_NIC			Creado el	01.11.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	ERNESTO ROBERTS SCA							Idioma	ES
+	ERNESTO ROBERTS SCA
+	RECONQUISTA
+	3560 RECONQUISTA
+	ARGENTINA
+
+	Acreedor	1018017		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	ESTACION D			Gr.cuentas	Z001
+	Creado por	RF_NIC			Creado el	01.11.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	ESTACION DE SERVICIO SAN LORENZO CHICO S							Idioma	ES
+	ESTACION DE SERVICIO SAN LORENZO CHICO S
+	SALTA
+	4400 SALTA
+	ARGENTINA
+
+	Acreedor	1018018		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	PETRONORTE			Gr.cuentas	Z001
+	Creado por	RF_NIC			Creado el	01.11.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	PETRONORTE SA							Idioma	ES
+	PETRONORTE SA
+	SAN MIGUEL DE TUCUMAN
+	4000 SAN MIGUEL DE TUCUMAN
+	ARGENTINA
+
+	Acreedor	1018310		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	HORIZONTES			Gr.cuentas	Z001
+	Creado por	SAP_WFRT			Creado el	07.11.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	HORIZONTES S.A.							Idioma	ES
+	Av. Ex Combatiente de Malvinas 3890
+	4400 SALTA
+	ARGENTINA
+
+	Acreedor	1018311		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	WALD SA			Gr.cuentas	Z001
+	Creado por	SAP_WFRT			Creado el	07.11.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	WALD SA				Idioma	ES
+	AV WARNES 766
+	1414 CABA
+	ARGENTINA
+
+	Acreedor	1018312		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	AGRONOA CO			Gr.cuentas	Z001
+	Creado por	SAP_WFRT			Creado el	07.11.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	AGRONOA COMUNICACIONES SAS							Idioma	ES
+	PASAJE EMILIO ESPELTA 7
+	4400 SALTA
+	ARGENTINA
+
+	Acreedor	1018313		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	HEMELIA SR			Gr.cuentas	Z001
+	Creado por	SAP_WFRT			Creado el	07.11.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	HEMELIA SRL							Idioma	ES
+	CHARCAS 4070 PT DPTO A
+	1425 CABA
+	ARGENTINA
+
+	Acreedor	1018606		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	FERNANDEZ			Gr.cuentas	Z001
+	Creado por	RF_NIC			Creado el	21.11.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	FERNANDEZ CARLOS							Idioma	ES
+	FERNANDEZ CARLOS
+	LABOULAYE
+	6120 LABOULAYE
+	ARGENTINA
+
+	Acreedor	1018607		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	FLORES JOS			Gr.cuentas	Z001
+	Creado por	RF_NIC			Creado el	21.11.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	FLORES JOSE LUIS							Idioma	ES
+	FLORES JOSE LUIS
+	SALADILLO
+	7260 SALADILLO
+	ARGENTINA
+
+	Acreedor	1018608		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	BERTONE NI			Gr.cuentas	Z001
+	Creado por	RF_NIC			Creado el	21.11.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	BERTONE NICOLAS							Idioma	ES
+	BERTONE NICOLAS
+	RAFAELA
+	2300 RAFAELA
+	ARGENTINA
+
+	Acreedor	1018609		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	BETTINI IV			Gr.cuentas	Z001
+	Creado por	RF_NIC			Creado el	21.11.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	BETTINI IVAN							Idioma	ES
+	BETTINI IVAN
+	CORDOBA
+	5000 CORDOBA
+	ARGENTINA
+
+	Acreedor	1018620		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	HAQUIN EMI			Gr.cuentas	Z001
+	Creado por	RF_NIC			Creado el	21.11.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	HAQUIN EMILIANO							Idioma	ES
+	HAQUIN EMILIANO
+	SAUCE VIEJO
+	3017 SAUCE VIEJO
 	ARGENTINA
 
 	Acreedor	2000119		Sociedad			Nombre de la sociedad
@@ -9165,6 +9358,155 @@
 	CARLINO PAMELA MELISA							Idioma	ES
 	COCHABAMBA 1054
 	2000 ROSARIO
+	ARGENTINA
+
+	Acreedor	2001899		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	FERNANDEZ			Gr.cuentas	Z002
+	Creado por	SAP_WFRT			Creado el	07.11.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	FERNANDEZ GILL JOAQUIN EDUARDO							Idioma	ES
+	CHAMPAGNAT 0 CPTO 150
+	1027 PILAR
+	ARGENTINA
+
+	Acreedor	2001910		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	TARLING CA			Gr.cuentas	Z002
+	Creado por	SAP_WFRT			Creado el	07.11.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	TARLING CAROLINA SUSANA							Idioma	ES
+	BARRIO LA CABALLERIZA CAMAÑO 134
+	1012 PILAR
+	ARGENTINA
+
+	Acreedor	2001911		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	CARBALLEIR			Gr.cuentas	Z002
+	Creado por	SAP_WFRT			Creado el	07.11.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	CARBALLEIRO RODRIGO							Idioma	ES
+	25 DE MAYO 252 PISO 2°
+	1017 CABA
+	ARGENTINA
+
+	Acreedor	2001917		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	LENCINAS L			Gr.cuentas	Z002
+	Creado por	SAP_WFRT			Creado el	14.11.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	LENCINAS LEDESMA CRISTIAN REMIGIO							Idioma	ES
+	ACTIS 534
+	2300 RAFAELA
+	ARGENTINA
+
+	Acreedor	2001918		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	MARSILI OM			Gr.cuentas	Z002
+	Creado por	SAP_WFRT			Creado el	14.11.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	MARSILI OMAR ALBERTO							Idioma	ES
+	25 DE MAYO 3701
+	3000 SANTA FE
+	ARGENTINA
+
+	Acreedor	2001942		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	DIGITAL SO			Gr.cuentas	Z002
+	Creado por	RF_NIC			Creado el	21.11.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	DIGITAL SOLUTION SA							Idioma	ES
+	DIGITAL SOLUTION SA
+	RAFAELA
+	2300 RAFAELA
+	ARGENTINA
+
+	Acreedor	2001943		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	SEMBRANDO			Gr.cuentas	Z002
+	Creado por	RF_NIC			Creado el	21.11.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	SEMBRANDO BUENOS MOMENTOS SA							Idioma	ES
+	SEMBRANDO BUENOS MOMENTOS SA
+	RAFAELA
+	2300 RAFAELA
+	ARGENTINA
+
+	Acreedor	2001944		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	MASSIO SA			Gr.cuentas	Z002
+	Creado por	RF_NIC			Creado el	21.11.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	MASSIO SA				Idioma	ES
+	MASSIO SA
+	BELL VILLE
+	2550 BELL VILLE
+	ARGENTINA
+
+	Acreedor	2001945		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	VIA CARGO			Gr.cuentas	Z002
+	Creado por	RF_NIC			Creado el	21.11.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	VIA CARGO SA							Idioma	ES
+	VIA CARGO SA
+	BUENOS AIRES
+	1009 BUENOS AIRES
+	ARGENTINA
+
+	Acreedor	2001946		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	NESTOR WAS			Gr.cuentas	Z002
+	Creado por	RF_NIC			Creado el	21.11.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	NESTOR WASINGER SRL							Idioma	ES
+	NESTOR WASINGER SRL
+	ROQUE SAENZ PEÑA
+	3700 ROQUE SAENZ PEÑA
+	ARGENTINA
+
+	Acreedor	2001947		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	PARADOR PO			Gr.cuentas	Z002
+	Creado por	RF_NIC			Creado el	21.11.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	PARADOR POSTA RUTA 34 SRL							Idioma	ES
+	PARADOR POSTA RUTA 34 SRL
+	CERES
+	2340 CERES
+	ARGENTINA
+
+	Acreedor	2001948		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	RIVIERA PA			Gr.cuentas	Z002
+	Creado por	RF_NIC			Creado el	21.11.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	RIVIERA PALACE SA							Idioma	ES
+	RIVIERA PALACE SA
+	ROSARIO
+	2000 ROSARIO
+	ARGENTINA
+
+	Acreedor	2001949		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	TIBURCIO S			Gr.cuentas	Z002
+	Creado por	RF_NIC			Creado el	21.11.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	TIBURCIO SANZ SA							Idioma	ES
+	TIBURCIO SANZ SA
+	BANDA DEL RIO SALI
+	4109 BANDA DEL RIO SALI
+	ARGENTINA
+
+	Acreedor	2001950		Sociedad			Nombre de la sociedad
+	Sección			DATOS TÉCNICOS
+	Conc.búsq.	DESARROLLO			Gr.cuentas	Z002
+	Creado por	RF_NIC			Creado el	21.11.2024
+	Sección			COMUNICACIÓN CON ACREEDOR
+	DESARROLLOS MAIPU S.A.							Idioma	ES
+	DESARROLLOS MAIPU S.A.
+	MENDOZA
+	5500 MENDOZA
 	ARGENTINA
 
 	Acreedor	3000030		Sociedad			Nombre de la sociedad
