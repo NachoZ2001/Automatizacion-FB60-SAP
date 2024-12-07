@@ -561,10 +561,13 @@ namespace FB60_SAP
             diccionarioCuentasMayor = new Dictionary<string, long>
             {
                 {"GASTOS COMBUSTIBLES", 8001070200},
+                {"GASTO COMBUSTIBLE", 8001070200},
                 {"GASTOS OBRA SOCIAL", 8001010202},
                 {"GASTOS RODADOS", 8001150200},
+                {"GASTO RODADO", 8001150200},
                 {"GASTOS HOTEL", 8001050000},
                 {"GASTOS COMIDA", 8001050000},
+                {"GASTO COMIDA", 8001050000},
                 {"GASTOS COMIDAS", 8001050000},
                 {"GASTOS ALOJAMIENTO", 8001050000},
                 {"GASTOS GENERALES", 8001020100},
